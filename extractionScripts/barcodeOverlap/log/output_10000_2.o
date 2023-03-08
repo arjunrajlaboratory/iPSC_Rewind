@@ -1,0 +1,38 @@
+Sender: LSF System <lsfadmin@node184.hpc.local>
+Subject: Job 74103172: <Rscript 2021.08.07_simulatingBarcodeOverlapAcrossSplits_1in10000.R> in cluster <pennhpc> Done
+
+Job <Rscript 2021.08.07_simulatingBarcodeOverlapAcrossSplits_1in10000.R> was submitted from host <node155.hpc.local> by user <naveenj> in cluster <pennhpc>.
+Job was executed on host(s) <16*node184.hpc.local>, in queue <normal>, as user <naveenj> in cluster <pennhpc>.
+</home/naveenj> was used as the home directory.
+</project/arjunrajlab/hiFTTM/repo/localScriptsForR/barcodeSimulations> was used as the working directory.
+Started at Results reported on 
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+Rscript 2021.08.07_simulatingBarcodeOverlapAcrossSplits_1in10000.R
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   13736.73 sec.
+    Max Memory :                                 6364 MB
+    Average Memory :                             4717.32 MB
+    Total Requested Memory :                     250000.00 MB
+    Delta Memory :                               243636.00 MB
+    Max Swap :                                   6563 MB
+    Max Processes :                              3
+    Max Threads :                                5
+    Run time :                                   13761 sec.
+    Turnaround time :                            13762 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <./output_10000_2.e> for stderr output of this job.
+
