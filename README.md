@@ -11,7 +11,7 @@ In order to reproduce all graphs and images in this paper:
 
 Download and install R v4.0.5.
 
-Download all files in the structure provided for this repository from Dropbox: https://www.dropbox.com/sh/ulu6728tcp49dv2/AAAPwLYQiVLloH_JL38lvTj6a?dl=0. Your project directory should have subdirectories extractedData, extractionScripts, figures, imageProcessing, plots, plotScripts, and rawData.
+Download all files in the structure provided for this repository from Dropbox: https://www.dropbox.com/sh/ulu6728tcp49dv2/AAAPwLYQiVLloH_JL38lvTj6a?dl=0 (original manuscript), https://www.dropbox.com/sh/zz958910t4fkj9w/AAAgTVwO5yAKZ1TpSQVfV6Qga?dl=0 (revised manuscript). Your project directory should have subdirectories extractedData, extractionScripts, figures, imageProcessing, plots, plotScripts, and rawData.
 
 Edit directory variables (i.e. "homeDirectory") variables to reflect your local file paths for this project repository and the associated downloaded files. Set "plotDirectory" to reflect your desired location for finished plots.
 
