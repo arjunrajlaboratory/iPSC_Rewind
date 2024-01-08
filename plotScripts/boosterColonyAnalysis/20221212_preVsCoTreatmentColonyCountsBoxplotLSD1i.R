@@ -4,8 +4,8 @@ gc()
 library(tidyverse)
 library(ggsignif)
 
-homeDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/boosterColonyCounts/preVsCoTreatmentLSD1i/"
-plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/boosterColonyAnalysis/"
+homeDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/boosterColonyCounts/preVsCoTreatmentLSD1i/"
+plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/boosterColonyAnalysis/"
 
 sampleTablesList <- list(rep('NA', length(sampleDirList)))
 sampleFoldersList <- list(rep('NA', length(sampleDirList)))
@@ -43,8 +43,9 @@ sampleTableMean$cond <- factor(sampleTableMean$cond, levels = c("preDMSO_DMSO", 
 
 ggplot(sampleTableMean, aes(x = cond, y = meanNumBlobNorm)) +
   stat_summary(fun = mean, geom = "col") +
-  stat_summary(fun = mean, geom = "point", size = 5) +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25) +
+  geom_jitter(height = 0, width = 0.25, size = 2.5) +
+  #stat_summary(fun = mean, geom = "point", size = 5) +
+  #stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
   geom_hline(yintercept = 1, linetype = "dashed") +
   geom_signif(comparisons = list(c("only OKSM", "pre-treatment"), c("co-treatment", "pre- and\nco-treatment")), test = "t.test")

@@ -9,8 +9,8 @@ library(pheatmap)
 
 theme_set(theme_classic())
 
-dataDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/bulkRNASeq/'
-plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/bulkRNASeq/'
+dataDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/bulkRNASeq/'
+plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/bulkRNASeq/'
 
 countMatrix <- read.table(file = paste0(dataDirectory, '20220914_RNASeq_ProlifSort_Boosters_finalData.tsv'), sep = '\t', header = TRUE)
 countMatrixFormat <- countMatrix %>% dplyr::select(sampleID, counts, gene_id) %>%
@@ -115,7 +115,8 @@ countMatrixPlot$gene_name <- factor(countMatrixPlot$gene_name, levels = c("TOP2A
 
 ggplot(countMatrixPlot, aes(x = cond, y = tpm)) +
   stat_summary(fun = mean, geom = "bar") +
-  stat_summary(fun = mean, geom = "point") +
+  geom_jitter(height = 0, width = 0.25, size = 0.25) +
+  #stat_summary(fun = mean, geom = "point") +
   stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25) +
   facet_wrap(~ gene_name, ncol = 4) + ylab("TPM") +
   theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))

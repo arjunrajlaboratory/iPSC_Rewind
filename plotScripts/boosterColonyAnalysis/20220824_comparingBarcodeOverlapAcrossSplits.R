@@ -12,17 +12,17 @@ library(spgs)
 
 theme_set(theme_classic())
 
-homeDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/barcodeOverlap/'
-plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/barcodeOverlap/'
+homeDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/barcodeOverlap/'
+plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/barcodeOverlap/'
 
 #### load dataset into data frames----
-combDir14 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/boosters/barcodes/combined/hiFTTM14/"
-combDir16 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/boosters/barcodes/combined/hiFTTM16/"
+combDir14 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/boosters/barcodes/combined/hiFTTM14/"
+combDir16 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/boosters/barcodes/combined/hiFTTM16/"
 
-DOT1LDir13 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/boosters/barcodes/DOT1Li/hiFTTM13/"
+DOT1LDir13 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/boosters/barcodes/DOT1Li/hiFTTM13/"
 
-LSD1Dir6 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/boosters/barcodes/LSD1i/hiFTTM6/"
-LSD1Dir28 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/boosters/barcodes/LSD1i/hiFTTM28/"
+LSD1Dir6 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/boosters/barcodes/LSD1i/hiFTTM6/"
+LSD1Dir28 <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/boosters/barcodes/LSD1i/hiFTTM28/"
 
 sampleDirList <- c(combDir14, combDir16, DOT1LDir13, LSD1Dir6)
 
@@ -825,7 +825,8 @@ memoryOverlapTable$cond <- factor(memoryOverlapTable$cond, levels = c("DMSO", "L
 
 ggplot(memoryOverlapTable, aes(x = cond, y = overlap)) +
   stat_summary(fun = mean, geom = "bar") +
+  geom_jitter(height = 0, width = 0.25, size = 2) +
   stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25) +
-  stat_summary(fun = mean, geom = "point", size = 5) +
+  #stat_summary(fun = mean, geom = "point", size = 5) +
   geom_signif(comparisons = list(c("DMSO", "LSD1"), c("LSD1", "DOT1L"), c("DMSO", "DOT1L")), test = "t.test")
 ggsave(file = paste0(plotDirectory, "barcodeOverlapForLSD1iConditions.pdf"), height = 3, width = 3)

@@ -7,7 +7,7 @@ library(reshape2)
 library(ggrepel)
 library(ggsignif)
 library(egg)
-library(pheatmap)
+library(pheatmap) 
 library(monaLisa)
 library(JASPAR2020)
 library(httr)
@@ -16,8 +16,8 @@ library(jsonlite)
 options(future.globals.maxSize = 4000 * 1024 ^ 2)
 theme_set(theme_classic())
 
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/rewind10X/homerAnalysis/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/rewind10X/homerAnalysis/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/rewind10X/homerAnalysis/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/rewind10X/homerAnalysis/"
 
 markersComb <- readRDS(file = paste0(homeDirectory, "markersComb.rds"))
 
@@ -102,7 +102,9 @@ for(i in 1:length(genes$gene)) {
 
 rownames(geneMatrixNorm) <- genes$gene
 colnames(geneMatrixNorm) <- genes$gene
-pheatmap(geneMatrixNorm)
+plot <- pheatmap(geneMatrixNorm)
+ggsave(plot, filename = paste0(plotDirectory, "overlapTF_negMarkers_Legend.pdf"), height = 5, width = 5)
+
 plot <- pheatmap(geneMatrixNorm, treeheight_row = 0, treeheight_col = 0, legend = FALSE)
 ggsave(plot, filename = paste0(plotDirectory, "overlapTF_negMarkers.pdf"), height = 5, width = 5)
 

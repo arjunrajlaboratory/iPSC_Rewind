@@ -6,15 +6,15 @@ library(reshape2)
 
 theme_set(theme_classic())
 
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/SQSTM1, SPP1/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/inSituCarbonCopies/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/SQSTM1, SPP1/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/inSituCarbonCopies/"
 
 #### extract data from .csv files ####
 #####################################################################################################################
-path1 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM12_R1_well2_counts.csv'
-path2 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM12_R2_well2_counts.csv'
-path3 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM9_well1_counts.csv'
-path4 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM9_well2_counts.csv'
+path1 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM12_R1_well2_counts.csv'
+path2 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM12_R2_well2_counts.csv'
+path3 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM9_well1_counts.csv'
+path4 <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/SQSTM1, SPP1/TM9_well2_counts.csv'
 pathList <- c(path1, path2)
 
 bcTable <- read.csv(path1, header = TRUE) %>% dplyr::filter(isGood != FALSE) %>% mutate(exp = "TM12_1")

@@ -6,8 +6,8 @@ library(reshape2)
 
 theme_set(theme_classic())
 
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/R1_TM8/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/inSituCarbonCopies/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/R1_TM8/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/inSituCarbonCopies/"
 
 #### extract data from .csv files ####
 #####################################################################################################################
@@ -52,7 +52,7 @@ ggplot(bcTable,aes(x=primed,y=SOX2)) +
 
 
 ### check OKSM expression upon DOX induction ###
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/inSituCarbonCopies/post-DOX_OKSM/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/inSituCarbonCopies/post-DOX_OKSM/"
 
 path1 <- paste0(homeDirectory, "results_1.csv")
 path2 <- paste0(homeDirectory, "results_2.csv")

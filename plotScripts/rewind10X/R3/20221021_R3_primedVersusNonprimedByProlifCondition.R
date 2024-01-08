@@ -18,8 +18,8 @@ library(matrixStats)
 
 theme_set(theme_classic())
 
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/rewind10X/R3/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/rewind10X/R3/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/rewind10X/R3/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/rewind10X/R3/"
 
 scanorama_filter <- readRDS(paste0(homeDirectory, "scanorma_filter.rds"))
 s.genes <- cc.genes$s.genes
@@ -33,7 +33,7 @@ umapClusters <- umapClusters %>% dplyr::rename(cluster = scanorama_snn_res.0.3)
 primedCellIDList <- readRDS(file = paste0(homeDirectory, "primedCellIDList.rds"))
 cutoffList <- c(10, 25, 50, 100, 150, 200, 250, 500, 1000)
 i = 6
-primedAllUMAP <- filter(umapCoordinates, cellID %in% c(unlist(primedCellIDList[[i]]), unlist(primedCellIDList[[i+length(cutoffList)]]), unlist(primedCellIDList[[i+2*length(cutoffList)]]))) %>%
+primedAllUMAP <- dplyr::filter(umapCoordinates, cellID %in% c(unlist(primedCellIDList[[i]]), unlist(primedCellIDList[[i+length(cutoffList)]]), unlist(primedCellIDList[[i+2*length(cutoffList)]]))) %>%
   dplyr::filter(sampleNum %in% c("S1", "S2", "S3"))
 
 overlapTableList <- readRDS(paste0(homeDirectory, "overalapTableList.rds"))
@@ -43,13 +43,13 @@ linCountToOverlaps <- read.table(file = paste0(homeDirectory, "filtered10XCells.
 #######################################################################################################################################################
 overlapTableAll <- bind_rows(overlapTableList[[1]], overlapTableList[[2]], overlapTableList[[3]])
 overlapTableAll <- overlapTableAll %>% rowwise() %>% mutate(nUMIMax = max(nUMINorm.x, nUMINorm.y)) %>% dplyr::select(BC50StarcodeD8, nUMIMax) %>% ungroup()
-overlapTableAll <- overlapTableAll %>% group_by(BC50StarcodeD8) %>% filter(nUMIMax == max(nUMIMax))
+overlapTableAll <- overlapTableAll %>% group_by(BC50StarcodeD8) %>% dplyr::filter(nUMIMax == max(nUMIMax))
 
 primedFateTable <- inner_join(linCountToOverlaps %>% dplyr::select(1:2), overlapTableAll, by = c("barcode" = "BC50StarcodeD8"))
 primedFateTable <- inner_join(primedFateTable, umapCoordinates, by = c("cellID"))
 primedFateTable$sampleNum <- factor(primedFateTable$sampleNum, levels = c("S3", "S1", "S2"), labels = c("slow", "control", "fast"))
 
-ggplot(primedFateTable %>% filter(nUMIMax > 15), aes(x = sampleNum, y = log(nUMIMax))) +
+ggplot(primedFateTable %>% dplyr::filter(nUMIMax > 15), aes(x = sampleNum, y = log(nUMIMax))) +
   geom_boxplot() +
   geom_jitter(seed = 1234) +
   geom_signif(comparisons = list(c("control", "fast"), c("control", "slow"))) +
@@ -194,7 +194,7 @@ diffGeneList <- c("POLR2L", "MT2A", "S100A6", "FTH1", "NQO1", "IGFBP7")
 DefaultAssay(scTransform) <- "RNA"
 scTransform <- ScaleData(scTransform)
 FeaturePlot(scTransform, features = diffGeneList, reduction = "umap_scanorama", slot = "scale.data", ncol = 3, , min.cutoff = "q10", max.cutoff = "q90", raster = TRUE, pt.size = 5, raster.dpi = c(300, 300)) &
-  NoAxes() & scale_color_gradient2(low = "#0039A6", mid = "lightgray", high = "#EE352E", midpoint = 0.6) & NoLegend() 
+  NoAxes() & scale_color_gradient2(low = "#0039A6", mid = "lightgray", high = "#EE352E", midpoint = 0.6)
 ggsave(filename = paste0(plotDirectory, "markerUMAPSubsetPCA.pdf"), units = "in", height = 4, width = 5)
 
 markersProlif <- readRDS(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/rewind10X/R3/DEProlifSpeed.rds")

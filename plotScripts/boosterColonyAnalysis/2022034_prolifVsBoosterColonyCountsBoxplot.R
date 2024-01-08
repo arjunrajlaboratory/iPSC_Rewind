@@ -1,11 +1,11 @@
 library(tidyverse)
 library(ggsignif)
 
-dataDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/boosterColonyCounts/"
-plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/boosterColonyAnalysis/"
+dataDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/boosterColonyCounts/"
+plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/boosterColonyAnalysis/"
 
-data_R1 <- read.csv(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/proliferationSort/colonyCounts/prolifSortwLSD1i/20220329_prolifVsBoosters/results.csv")
-data_R2 <- read.csv(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/proliferationSort/colonyCounts/prolifSortwLSD1i/20220808_prolifVsBoosters/results.csv")
+data_R1 <- read.csv(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/proliferationSort/colonyCounts/prolifSortwLSD1i/20220329_prolifVsBoosters/results.csv")
+data_R2 <- read.csv(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/proliferationSort/colonyCounts/prolifSortwLSD1i/20220808_prolifVsBoosters/results.csv")
 
 data_R1 <- data_R1 %>% mutate(cond = gsub("(.*)\\_(.*)\\_(.*).tif", "\\1", .$Dataset)) %>%
   mutate(prolif = gsub("(.*)\\_(.*)\\_(.*).tif", "\\2", .$Dataset)) %>%
@@ -29,6 +29,7 @@ data <- data %>% dplyr::filter(prolif %in% c("fast", "control", "slow"))
 ggplot(data, aes(x = cond, y = normBlob)) +
   facet_wrap(~prolif) +
   stat_summary(fun = mean, geom = "col") +
+  geom_jitter(height = 0, width = 0.25, size = 2) +
   stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.25) +
   geom_signif(comparisons = list(c("control", "LSD1i")), test = "t.test", y_position = 12.5) +
   geom_hline(yintercept = 1, linetype = "dashed")

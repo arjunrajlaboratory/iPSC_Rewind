@@ -8,8 +8,8 @@ library(PupillometryR)
 
 theme_set(theme_classic())
 
-dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/CRISPR/R1_smFISH/UBC A594, SPP1 CY5/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/CRISPR/R1/"
+dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/CRISPR/R1_smFISH/UBC A594, SPP1 CY5/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/CRISPR/R1/"
 
 folders <- list.dirs(path = dataDirectory, full.names = FALSE)[-1]
 
@@ -26,7 +26,7 @@ spotTable %>% group_by(condition) %>% summarize(number = n())
 spotTable <- spotTable %>% mutate(label = condition)
 spotTable$label <- ifelse(spotTable$condition %in% c("control_1", "control_2", "control_3", "control_4"), "control", spotTable$label)
 
-spotTablePlot <- spotTable %>% filter(channel == "cy")
+spotTablePlot <- spotTable %>% dplyr::filter(channel == "cy")
 means <- aggregate(GroupCount ~ label, spotTablePlot, mean)
 means$GroupCount <- round(means$GroupCount, digits = 2)
 ggplot(spotTablePlot, aes(x = label, y = GroupCount)) +
@@ -39,11 +39,13 @@ ggplot(spotTablePlot, aes(x = label, y = GroupCount)) +
   scale_fill_manual(values = c(rep("grey", 1), rep("red", 4)))
 
 plot1 <- ggplot(spotTablePlot, aes(x = label, y = GroupCount, fill = label)) +
-  geom_hline(yintercept = means %>% filter(label == "control") %>% .$GroupCount, linetype = "dashed") +
-  geom_violin(draw_quantiles = TRUE) + NoLegend() +
-  geom_signif(comparisons = list(c("control", "SPP1_1"), c("control", "SPP1_2"), c("control", "SPP1_3"), c("control", "SPP1_4")), step_increase = 0.125) +
+  geom_violin(draw_quantiles = c(0.5), scale = "width") + NoLegend() +
+  geom_hline(yintercept = means %>% dplyr::filter(label == "control") %>% .$GroupCount, linetype = "dashed") +
+  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  #geom_signif(comparisons = list(c("control", "KDM1A_1"), c("control", "KDM1A_2"), c("control", "KDM1A_3"), c("control", "KDM1A_4")), step_increase = 0.075, map_signif_level = TRUE) +
   theme(axis.title.x = element_blank()) + ylab("RNA counts per cell") +
-  scale_fill_manual(values = c(rep("#D8D8D8", 1), rep("#ED1C24", 4)))
+  scale_fill_manual(values = c(rep("#D8D8D8", 1), rep("#ED1C24", 4))) + ylim(0, 100)
+ggsave(filename = paste0(plotDirectory, "smFISHCheckGraphs_violinOnly_R1_SPP1.pdf"), plot = plot1, units = "in", height = 3, width = 4.5, useDingbats = FALSE)
 
 plot2 <- ggplot(spotTablePlot, aes(x = label, y = GroupCount, fill = label)) +
   stat_summary(fun = "mean", geom = "col") +

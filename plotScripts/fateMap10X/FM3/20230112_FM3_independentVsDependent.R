@@ -10,11 +10,11 @@ library(ggrastr)
 
 theme_set(theme_classic())
 
-homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/fateMap10X/FM3/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/fateMap10X/FM3/"
+homeDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/fateMap10X/FM3/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/fateMap10X/FM3/"
 
 linCountToOverlaps <- as_tibble(read.table(file = paste0(homeDirectory, "filtered10XCells.txt"), header = TRUE, stringsAsFactors = F, sep = "\t"))
-barcodes <- as_tibble(read.table(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/fateMap10X/FM3/stepThreeStarcodeShavedReads_BC_10XAndGDNA.txt", header = TRUE, stringsAsFactors = F, sep = "\t"))
+barcodes <- as_tibble(read.table(file = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/fateMap10X/FM3/stepThreeStarcodeShavedReads_BC_10XAndGDNA.txt", header = TRUE, stringsAsFactors = F, sep = "\t"))
 
 #### normalize gDNA barcode reads by spike-ins ####
 #######################################################################################################################################################
@@ -889,10 +889,10 @@ foldchangeTable$gene <- factor(foldchangeTable$gene, levels = c("NANOG", "POU5F1
                                                           "EPCAM", "CDH1", "NODAL", "LEFTY1"))
 
 ggplot(foldchangeTable, aes(x = gene, y = foldchange)) +
-  #geom_boxplot(outlier.shape = NA) +
-  stat_summary(fun = mean, geom = "bar", fill = "lightgray") +
+  geom_boxplot(fill = "gray") +
+  #stat_summary(fun = mean, geom = "bar", fill = "lightgray") +
   stat_summary(fun = mean, geom = "point", size = 2.5, color = "blue") +
-  stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.25, color = "blue") +
+  #stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.25, color = "blue") +
   #geom_jitter(width = 0.25) +
   geom_hline(yintercept = 0) +
   geom_hline(yintercept = c(-0.5, 0.5), linetype = "dashed")
@@ -917,10 +917,10 @@ ggplot(foldchangeTablePlot %>% dplyr::filter(category != "none"), aes(x = "", y 
   geom_hline(yintercept = c(-0.5, 0.5), linetype = "dashed")
 
 ggplot(foldchangeTable %>% dplyr::filter(category != "none"), aes(x = gene, y = foldchange)) +
-  #geom_boxplot(outlier.shape = NA) +
-  stat_summary(fun = mean, geom = "bar", fill = "lightgray") +
+  geom_boxplot(fill = "gray") +
+  #stat_summary(fun = mean, geom = "bar", fill = "lightgray") +
   stat_summary(fun = mean, geom = "point", size = 2.5, color = "blue") +
-  stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.25, color = "blue") +
+  #stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.25, color = "blue") +
   #geom_jitter(width = 0.25) +
   geom_hline(yintercept = 0) +
   geom_hline(yintercept = c(-0.5, 0.5), linetype = "dashed") +

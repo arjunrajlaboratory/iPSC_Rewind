@@ -6,8 +6,8 @@ library(ggpubr)
 
 theme_set(theme_classic())
 
-dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/proliferationAnalysis/CRISPR/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/proliferationAnalysis/"
+dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/proliferationAnalysis/CRISPR/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/proliferationAnalysis/"
 
 folders1 <- list.dirs(path = paste0(dataDirectory, "R1/"), full.names = FALSE)[-1]
 subfolders1 <- folders1[lengths(strsplit(folders1, "/")) == 2]
@@ -62,8 +62,9 @@ spotTableCast$prolifPerDayNorm <- prolifPerDayNormList
 
 ggplot(spotTableCast, aes(x = guide, y = prolifPerDay)) +
   stat_summary(fun = "mean", geom = "col") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
-  stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
+  geom_jitter(height = 0, width = 0.25, seed = 1234, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  #stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   geom_hline(yintercept = mean(spotTableCast %>% dplyr::filter(guide == "control") %>% .$prolifPerDay), linetype = "dashed") +
   NoLegend() + theme(axis.title.x = element_blank()) + ylab("proliferation rate per day") + ylim(0, 3)
 ggsave(filename = paste0(plotDirectory, "prolifRatePerCRISPRGuideFacet.pdf"), units = "in", height = 3, width = 5, useDingbats = FALSE)
@@ -72,7 +73,8 @@ spotTableCast$genesCorr <- spotTableCast$genes
 spotTableCast$genesCorr <- ifelse(spotTableCast$genes %in% c("B1", "B2", "control"), "control", spotTableCast$genesCorr)
 ggplot(spotTableCast, aes(x = genesCorr, y = prolifPerDay)) +
   stat_summary(fun = "mean", geom = "col") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  geom_jitter(height = 0, width = 0.25, seed = 1234, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   geom_hline(yintercept = mean(spotTableCast %>% dplyr::filter(guide == "control") %>% .$prolifPerDay), linetype = "dashed") +
   stat_compare_means(comparisons = list(c("control", "KDM1A"), c("control", "MDM2"), c("control", "SPP1"))) +
@@ -80,7 +82,8 @@ ggplot(spotTableCast, aes(x = genesCorr, y = prolifPerDay)) +
 
 ggplot(spotTableCast %>% filter(genesCorr != "KDM1A"), aes(x = genesCorr, y = prolifPerDay)) +
   stat_summary(fun = "mean", geom = "col") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  geom_jitter(height = 0, width = 0.25, seed = 1234, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   geom_hline(yintercept = mean(spotTableCast %>% dplyr::filter(guide == "control") %>% .$prolifPerDay), linetype = "dashed") +
   stat_compare_means(comparisons = list(c("control", "MDM2"), c("control", "SPP1"))) +

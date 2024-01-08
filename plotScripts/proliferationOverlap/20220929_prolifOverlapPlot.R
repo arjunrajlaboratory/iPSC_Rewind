@@ -5,8 +5,8 @@ library(Seurat)
 
 theme_set(theme_classic())
 
-dataDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/prolifOverlap/'
-plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/prolifOverlap/'
+dataDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/prolifOverlap/'
+plotDirectory <- '/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/prolifOverlap/'
 
 exp1Table <- readRDS(file = paste0(dataDirectory, "overlapMatrixTable_exp1.rds")) %>% mutate(exp = "1")
 exp2Table <- readRDS(file = paste0(dataDirectory, "overlapMatrixTable_exp2.rds")) %>% mutate(exp = "2")
@@ -16,7 +16,7 @@ finalTable <- bind_rows(exp1Table, exp2Table, exp3Table)
 
 finalTable$name <- factor(finalTable$name, levels = c("slow", "control", "fast"), labels = c("slow", "control", "fast"))
 
-ggplot(finalTable %>% filter(exp %in% c("1", "2", "3")), aes(x = name, y = value, fill = name)) +
+ggplot(finalTable %>% dplyr::filter(exp %in% c("1", "2", "3")), aes(x = name, y = value, fill = name)) +
   stat_summary(fun = "mean", geom = "bar") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25) +
   # geom_point() +
@@ -53,11 +53,12 @@ ggplot(finalTable %>% filter(exp %in% c("1", "2", "3")), aes(x = name, y = value
   facet_wrap(~variable, ncol = 2) + ylab("normalized ratio of overlap in lineage barcodes\nbetween each sorted population and iPSCs") +
   theme(legend.position = "none", axis.title.x = element_blank())
 
-finalTableFilter <- finalTable %>% filter(variable == 0.5, colonyThresh == 25)
+finalTableFilter <- finalTable %>% dplyr::filter(variable == 0.5, colonyThresh == 25)
 
-ggplot(finalTableFilter %>% filter(exp %in% c("1", "2", "3"), !(name == "control")), aes(x = name, y = value, fill = name)) +
+ggplot(finalTableFilter %>% dplyr::filter(exp %in% c("1", "2", "3"), !(name == "control")), aes(x = name, y = value, fill = name)) +
   stat_summary(fun = "mean", geom = "bar") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25) +
+  geom_jitter(height = 0, width = 0.25, size = 1.5) +
   ylab("normalized ratio of overlap in lineage barcodes\nbetween each sorted population and iPSCs") +
   theme(legend.position = "none", axis.title.x = element_blank()) +
   geom_hline(yintercept = 1, linetype = "dashed")

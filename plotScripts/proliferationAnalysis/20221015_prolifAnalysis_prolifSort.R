@@ -6,8 +6,8 @@ library(ggsignif)
 
 theme_set(theme_classic())
 
-dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/proliferationAnalysis/prolifSort/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/proliferationAnalysis/"
+dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/proliferationAnalysis/prolifSort/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/proliferationAnalysis/"
 
 folders <- list.dirs(path = dataDirectory, full.names = FALSE)[-1]
 subfolders <- folders[lengths(strsplit(folders, "/")) == 4]
@@ -51,13 +51,14 @@ spotTableCast$prolifPerDayNorm <- spotTableCast$prolifPerDay/(means %>% dplyr::f
 ggplot(spotTableCast %>% dplyr::filter(condition != "control"), aes(x = condition, y = prolifPerDayNorm, fill = condition)) +
   stat_summary(fun = "mean", geom = "col") +
   geom_hline(yintercept = 1, linetype = "dashed") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  geom_jitter(height = 0, width = 0.25, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   NoLegend() + theme(axis.title.x = element_blank()) + ylab("normalized proliferation rate")
 ggsave(filename = paste0(plotDirectory, "prolifRatesPerCondition.pdf"), units = "in", height = 1.5, width = 3, useDingbats = FALSE)
 
-dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/proliferationSort/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/proliferationSort/"
+dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/proliferationSort/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/proliferationSort/"
 data <- read.csv(file = paste0(dataDirectory, "proliferationSortAggregatecColonyCounts.csv"))
 dataFilter <- data %>% filter(!is.na(AverageNormalizedCounts)) %>% filter(!(Condition == "control"))
 dataFilter$Condition <- factor(dataFilter$Condition, levels = c("high", "midhigh", "midlow", "low"), labels = c("slow", "mid slow", "mid fast", "fast"))
@@ -65,7 +66,8 @@ dataFilter$Condition <- factor(dataFilter$Condition, levels = c("high", "midhigh
 ggplot(dataFilter, aes(x = Condition, y = AverageNormalizedCounts)) +
   stat_summary(fun = "mean", geom = "col") +
   geom_hline(yintercept = 1, linetype = "dashed") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  geom_jitter(height = 0, width = 0.25, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   NoLegend() + theme(axis.title.x = element_blank()) + ylab("normalized reprogramming rate")
 ggsave(paste0(plotDirectory, "cyclingReprogrammingRatePlot.pdf"), height = 1.5, width = 3)

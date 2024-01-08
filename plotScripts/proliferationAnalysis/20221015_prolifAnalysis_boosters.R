@@ -6,8 +6,8 @@ library(ggsignif)
 
 theme_set(theme_classic())
 
-dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/rawData/proliferationAnalysis/boosters/"
-plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/proliferationAnalysis/"
+dataDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/rawData/proliferationAnalysis/boosters/"
+plotDirectory <- "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/proliferationAnalysis/"
 
 folders <- list.dirs(path = dataDirectory, full.names = FALSE)[-1]
 subfolders <- folders[lengths(strsplit(folders, "/")) == 3] %>% .[c(9:10, 21:23, 33:56)]
@@ -62,7 +62,8 @@ ggsave(filename = paste0(plotDirectory, "prolifRatesPerBooster_onlyLSD1i.pdf"), 
 ggplot(spotTableCast %>% dplyr::filter(condition != "DOT1Li"), aes(x = condition, y = prolifPerDay, fill = condition)) +
   stat_summary(fun = "mean", geom = "col") +
   geom_hline(yintercept = means %>% dplyr::filter(condition == "control") %>% .$mean, linetype = "dashed") +
-  stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
+  geom_jitter(height = 0, width = 0.25, size = 2) +
+  #stat_summary(fun = "mean", geom = "point", size = 2.5, color = "black") +
   stat_summary(fun.data = "mean_se", geom = "errorbar", width = 0.25, color = "black") +
   geom_signif(comparisons = list(c("control", "LSD1i")), test = "t.test") +
   NoLegend() + theme(axis.title.x = element_blank()) + ylab("normalized proliferation rate")

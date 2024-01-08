@@ -1,8 +1,8 @@
 library(tidyverse)
 library(ggsignif)
 
-dataDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/extractedData/boosterColonyCounts/"
-plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Paper/plots/boosterColonyAnalysis/"
+dataDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/extractedData/boosterColonyCounts/"
+plotDirectory = "/Users/naveenjain/Dropbox (RajLab)/Shared_Naveen/Original Manuscript/plots/boosterColonyAnalysis/"
 
 data <- read.csv(file = paste0(dataDirectory, "manualColonYCounts.csv")) %>%
   dplyr::select(experiment, condition, fold.change.average) %>%
